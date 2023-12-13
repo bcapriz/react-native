@@ -7,10 +7,11 @@ import { useFonts } from 'expo-font'
 
 export default function App() {
   const [categorySelected, setCategorySelected] = useState('')
-
+ 
   const [fontLoaded] = useFonts({
     PlayfairDisplay: require('./assets/Fonts/PlayfairDisplay-Black.ttf')
   })
+  
 
   return (
     <View style={styles.container}>
