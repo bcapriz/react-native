@@ -4,7 +4,9 @@ import uuid from 'react-native-uuid'
 import ModalDelete from './src/components/ModalDelete';
 import AddProduct from './src/components/AddProduct';
 import ListProduct from './src/components/ListProduct';
-
+import Home from './src/screens/Home'
+import ItemListCategories from './src/screens/ItemListCategories';
+import { useFonts } from 'expo-font'
 
 export default function App() {
 
@@ -41,9 +43,18 @@ export default function App() {
     setModalVisible(false);
   };
 
+  const [categorySelected, setCategorySelected] = useState('')
+
+  const [fontLoaded] = useFonts({
+    PlayfairDisplay: require('./assets/Fonts/PlayfairDisplay-Black.ttf')
+  })
 
   return (
     <View style={styles.container}>
+      {categorySelected ? <ItemListCategories category={categorySelected} />
+        :
+        <Home setCategorySelected={setCategorySelected} />
+      }
 
       <AddProduct
         valueTitle={newTitleProduct}
@@ -72,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 0,
   },
   listContainer: {
     width: "100%",
