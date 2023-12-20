@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, Pressable, View } from "react-native";
+import { StyleSheet, Text, TextInput, Pressable, SafeAreaView } from "react-native";
 import { colors } from "../Global/colors";
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -26,7 +26,7 @@ const Search = ({ setKeyword }) => {
 
     return (
         <>
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <TextInput placeholder="Search" style={styles.input} value={input} onChangeText={(e) => setInput(e)} />
                 <Pressable onPress={searchFor}>
                     <EvilIcons name="search" color={colors.peptalk} size={30} />
@@ -34,7 +34,7 @@ const Search = ({ setKeyword }) => {
                 <Pressable onPress={removeItem}>
                     <AntDesign name="closecircle" color={colors.peptalk} size={19} />
                 </Pressable>
-            </View>
+            </SafeAreaView >
             {error ? <Text style={styles.errorInput}>{error}</Text> : null}
         </>
     )
@@ -48,8 +48,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         width: "90%",
-        paddingTop: 10,
-
+        marginTop: "2.5%",
+        paddingHorizontal: 5,
+        marginHorizontal: '6%'
     },
     input: {
         color: "#212121",

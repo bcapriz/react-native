@@ -1,38 +1,22 @@
-import { useState } from 'react';
-import {StyleSheet,  View } from 'react-native';
-import Home from './src/screens/Home'
-import ItemListCategories from './src/screens/ItemListCategories';
+import {  StatusBar } from 'react-native';
 import { useFonts } from 'expo-font'
 
+import { colors } from './src/Global/colors';
+import Navigator from './src/navigation/Navigator';
 
 export default function App() {
-  const [categorySelected, setCategorySelected] = useState('')
- 
   const [fontLoaded] = useFonts({
     PlayfairDisplay: require('./assets/Fonts/PlayfairDisplay-Black.ttf')
   })
-  
+  if(!fontLoaded) return null
 
   return (
-    <View style={styles.container}>
-       {categorySelected ? <ItemListCategories category={categorySelected} />
-        :
-        <Home setCategorySelected={setCategorySelected} />
-      }
-      
-    </View>
+    <>
+      <StatusBar backgroundColor={colors.peptalk} barStyle='default' />
+      <Navigator/>
+
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    marginTop: 0,
-  },
-  listContainer: {
-    width: "100%",
-  },
-
-});
+ 

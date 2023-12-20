@@ -1,18 +1,22 @@
-import { StyleSheet, Text, View, Image} from "react-native";
+import { StyleSheet, Text, View, Image, useWindowDimensions, Pressable } from "react-native";
 import { colors } from "../Global/colors";
+import CardShadow from "../Wrappers/cardShadow";
 
-const ProductItem = ({item}) => {
+
+const ProductItem = ({ item, navigation, route }) => {
+    const { width } = useWindowDimensions()
+
     return (
-        <View style={styles.container}>
-            <Image 
-            style={styles.images}
-            resizeMode="cover"
-            source={{uri: item.thumbnail}}
-            />
-            <Text style={styles.text}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate("Product", { id: item.id })}>
+            <Text style={width > 350 ? styles.text : styles.textMin}>
                 {item.title}
             </Text>
-        </View>
+            <Image
+                style={styles.images}
+                resizeMode="cover"
+                source={{ uri: item.thumbnail }}
+            />
+        </Pressable>
     )
 }
 
@@ -20,20 +24,34 @@ export default ProductItem
 
 const styles = StyleSheet.create({
     container: {
-        width:"80%",
-        backgroundColor:colors.alphabetBlue,
+        width: "80%",
+        backgroundColor: colors.peptalk,
         marginHorizontal: "10%",
         marginVertical: 10,
-        paddingHorizontal:10,
-        paddingVertical:18,
-        borderRadius:5,
-        flexDirection:'row',
-        alignItems:'center', 
-        justifyContent: 'start',
-        gap:30
+        paddingHorizontal: 10,
+        paddingVertical: 18,
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        gap: 30
     },
-    images:{
-        width:50,
-        height:50
+    images: {
+        minWidth: 80,
+        height: 80,
+        width: "30%"
+    },
+    text: {
+        fontSize: 18,
+        width: "60%",
+        textAlign: "center",
+        fontFamily:'PlayfairDisplay',
+        color:colors.bleachedSilk
+    },
+    textMin: {
+        width: "60%",
+        fontSize: 15,
+        textAlign: "center"
     }
 })
+

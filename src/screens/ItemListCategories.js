@@ -1,47 +1,37 @@
-import { FlatList, StyleSheet, View } from "react-native";
-import Header from "../components/Header";
-import Search from "../components/Search";
-import allProducts from "../Data/products.json"
-import ProductItem from "../components/ProductItem";
-import { useEffect, useState } from "react";
 
-const ItemListCategories = ({ category }) => {
+import { useEffect, useState } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
+import allProducts from '../Data/products.json'
+import ProductItem from '../components/ProductItem';
+import Search from '../components/Search';
 
+
+
+const ItemListCategories = ({ navigation, route }) => {
+    const { category } = route.params
+    const [products, setProducts] = useState([])
     const [keyword, setKeyword] = useState('')
-    const [products, setProducts] = useState(allProducts)
-
-
     useEffect(() => {
-        if (category) {
-            const productsCategory = allProducts.filter(product => product.category === category)
-            const productsFiltered = productsCategory.filter(product => product.title.includes(keyword))
-            setProducts(productsFiltered)
-        } else{
-            const productsFiltered = allProducts.filter(product => product.title.includes(keyword))
-            setProducts(productsFiltered)
-        }
-
-
-    }, [keyword])
+        const productsFiltered = allProducts.filter(product => product.category === category)
+        setProducts(productsFiltered)
+    }, [category])
 
     return (
-        <>
-            <Header title={category}/>
+        <View style={styles.container}>
             <Search setKeyword={setKeyword} />
             <FlatList
-                style={styles.container}
                 data={products}
                 keyExtractor={item => item.id}
-                renderItem={({ item }) => <ProductItem item={item} />}
+                renderItem={({ item }) => <ProductItem item={item} navigation={navigation} route={route} />}
             />
-        </>
+        </View>
     )
 }
-
-export default ItemListCategories;
+export default ItemListCategories
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%"
+        width: "100%",
     }
 })
+
