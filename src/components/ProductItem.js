@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, Image, useWindowDimensions, Pressable } from "react-native";
+import { StyleSheet, Text, Image, useWindowDimensions, Pressable } from "react-native";
 import { colors } from "../Global/colors";
-import CardShadow from "../Wrappers/cardShadow";
+import { useDispatch } from "react-redux";
+import { setProductSelected } from "../features/shop/shopSlice";
 
 
 const ProductItem = ({ item, navigation, route }) => {
     const { width } = useWindowDimensions()
-
+    const dispatch = useDispatch()
     return (
-        <Pressable style={styles.container} onPress={() => navigation.navigate("Product", { id: item.id })}>
+        <Pressable style={styles.container} onPress={() => {
+            dispatch(setProductSelected(item.id))
+            navigation.navigate("Product", { id: item.id })
+        }}>
             <Text style={width > 350 ? styles.text : styles.textMin}>
                 {item.title}
             </Text>
@@ -16,7 +20,7 @@ const ProductItem = ({ item, navigation, route }) => {
                 resizeMode="cover"
                 source={{ uri: item.thumbnail }}
             />
-        </Pressable>
+        </Pressable >
     )
 }
 
@@ -45,8 +49,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width: "60%",
         textAlign: "center",
-        fontFamily:'PlayfairDisplay',
-        color:colors.bleachedSilk
+        fontFamily: 'PlayfairDisplay',
+        color: colors.bleachedSilk
     },
     textMin: {
         width: "60%",

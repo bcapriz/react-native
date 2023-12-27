@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, useWindowDimensions, Image, Pressable } from 'react-native';
-import allProducts from '../Data/products.json'
 import { colors } from '../Global/colors';
-
+import { useSelector } from 'react-redux';
 
 const ItemDetail = ({ route }) => {
-  const { id } = route.params
-  const [product, setProduct] = useState({})
+  const product = useSelector((state) => state.shop.value.productSelected)
   const { width, height } = useWindowDimensions()
   const [lanscape, setLanscape] = useState(false)
   const images = product.images ? product.images : []
 
-  useEffect(() => {
-    const productFind = allProducts.find(product => product.id === id)
-    setProduct(productFind)
-  }, [id])
+
 
   useEffect(() => {
     if (width > height) {
